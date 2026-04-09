@@ -99,9 +99,7 @@ function MainLayout() {
           <CMVChart />
         </div>
 
-        <Placeholder $h="280px">
-          <TopGroups />
-        </Placeholder>
+        <TopGroups />
 
         <Placeholder $h="280px">
           <span className="slot-label">slot 3</span>

@@ -109,6 +109,21 @@ const ProductName = styled.div`
     margin-top: 0.1rem;
   }
 `;
+// Cell — célula para exibir os dados de valor, vendas e estoque, com fonte monoespaçada e alinhamento à direita para facilitar a leitura dos números
+const Cell = styled.div`
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  color: var(--text-secondary, #8892a4);
+  text-align: right;
+`;
+
+// Utilitário de formatação
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+
 function LeastSold() {
   useEffect(() => {
     console.log("Total de produtos:", mockProducts.length);
@@ -159,6 +174,7 @@ function LeastSold() {
               <div className="name">{p.produto}</div>
               <div className="cat">{p.categoria}</div>
             </ProductName>
+            <Cell>{formatCurrency(p.totalVendido)}</Cell>
           </TableRow>
         ))}
       </Table>

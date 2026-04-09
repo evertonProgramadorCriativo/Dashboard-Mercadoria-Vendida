@@ -3,15 +3,12 @@ import GlobalStyle from "./styles/GlobalStyle";
 import Header from "./components/Header";
 import MainLayout from "./components/MainLayout";
 import { mockCmv, mockGroups, mockProducts } from "./mocks/dashboardMocks";
+import { Chart as ChartJS } from "chart.js";
+
 function App() {
   useEffect(() => {
-    console.table("MockGroups: " + mockGroups.length + " grupos", mockGroups);
-    console.table(
-      "MockProducts: " + mockProducts.length + " produtos",
-      mockProducts,
-    );
-    console.table("MockCmv: " + mockCmv.labels.length + " meses", mockCmv);
-  }, [mockCmv, mockGroups, mockProducts]);
+    console.log("chart.js versão:", ChartJS.version);
+  }, []);
   return (
     <>
       <GlobalStyle />

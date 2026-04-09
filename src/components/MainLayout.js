@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import CMVChart from "./CMVChart";
 // MainLayout — grid com 3 slots: CMVChart, TopGroups, LeastSold
 const Wrapper = styled.main`
   max-width: 1400px;
@@ -93,8 +93,7 @@ function MainLayout() {
       {/* Grid responsivo com 3 slots: o primeiro ocupa toda a largura, e os outros dois ficam lado a lado em telas maiores */}
       <Grid>
         <Placeholder className="full" $h="340px">
-          <span className="slot-label">slot 1 · full-width</span>
-          <span className="slot-name">CMVChart </span>
+          <CMVChart />
         </Placeholder>
 
         <Placeholder $h="280px">

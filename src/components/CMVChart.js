@@ -115,6 +115,13 @@ function CMVChart() {
       "Total receita anual: R$",
       totalReceita.toLocaleString("pt-BR"),
     );
+    // O cálculo da média percentual de CMV é feito somando todos os valores do array mockCmv.percentuais usando reduce, dividindo pelo número de elementos para obter a média, e formatando o resultado para exibição com uma casa decimal. A média anual de % CMV é exibida no console para verificação.
+    const mediaPct = (
+      mockCmv.percentuais.reduce((a, b) => a + b, 0) /
+      mockCmv.percentuais.length
+    ).toFixed(1);
+    console.log("% CMV por mês:", mockCmv.percentuais);
+    console.log("Média % CMV anual:", mediaPct + "%");
   }, []);
 
   //  Dados do gráfico, utilizando os valores de labels e custos do mockCmv para criar um dataset do tipo "bar" com as barras vermelhas representando o custo (CMV) para cada mês. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades.
@@ -141,12 +148,27 @@ function CMVChart() {
         borderRadius: 4,
         order: 3,
       },
+      {
+        // Dataset 3: linha laranja de % CMV no eixo Y direito
+        type: "line",
+        label: "% CMV",
+        data: mockCmv.percentuais,
+        borderColor: "#f97316",
+        backgroundColor: "rgba(249,115,22,0.08)",
+        pointBackgroundColor: "#f97316",
+        pointRadius: 4,
+        tension: 0.4,
+        fill: false,
+        yAxisID: "y2", // eixo secundário
+        order: 1,
+      },
     ],
   };
   // Opções do gráfico, com customização de cores, fontes e formatação dos ticks para exibir os valores em milhares de reais (R$), além de manter a responsividade e a proporção do gráfico.
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: { mode: "index", intersect: false },
     plugins: {
       legend: {
         labels: { color: "#8892a4", font: { family: "Space Mono", size: 11 } },
@@ -162,6 +184,12 @@ function CMVChart() {
         grid: { color: "#1e2d4a" },
       },
     },
+    // Eixo direito exclusivo para a linha de percentual
+    y2: {
+      position: "right",
+      ticks: { color: "#f97316", callback: (v) => `${v}%` },
+      grid: { display: false },
+    },
   };
   return (
     <Card>
@@ -171,7 +199,7 @@ function CMVChart() {
 
       <ChartWrap>
         {" "}
-        {/* Adicionando Dados ao Gráfico barras vermelhas e azuis */}
+        {/* Barras vermelhas + barras cyan + linha laranja com pontos mostrando % no eixo direito */}
         <Bar data={chartData} options={options} />
       </ChartWrap>
     </Card>

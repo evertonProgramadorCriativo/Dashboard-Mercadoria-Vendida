@@ -47,7 +47,7 @@ const Card = styled.div`
     right: 0;
     height: 3px;
     border-radius: var(--radius) var(--radius) 0 0;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+    background: var(--accent-cyan);
   }
 `;
 // CardHeader: título do card com label e título principal, estilizados para destacar a informação de que se trata do gráfico de CMV
@@ -100,11 +100,20 @@ function CMVChart() {
       "Tooltip",
       "Legend",
     ]);*/
-    console.log("CMVChart — labels carregados do mock:", mockCmv.labels);
+    /*console.log("CMVChart — labels carregados do mock:", mockCmv.labels);
     console.log("Custos (12 meses):", mockCmv.custos);
     console.log(
       "Maior custo: R$",
       Math.max(...mockCmv.custos).toLocaleString("pt-BR"),
+    );*/
+    // totalCusto e totalReceita calculados a partir dos arrays de custos e receitas do mockCmv, utilizando o método reduce para somar os valores. Os resultados são formatados para exibição em reais (R$) com separadores de milhares, e exibidos no console para verificação.
+    const totalCusto = mockCmv.custos.reduce((a, b) => a + b, 0);
+    // totalReceita é calculado somando todos os valores do array mockCmv.receitas usando o método reduce, que acumula a soma dos elementos do array. O resultado é formatado para exibição em reais (R$) com separadores de milhares usando toLocaleString('pt-BR'), e ambos os totais são exibidos no console para verificação.
+    const totalReceita = mockCmv.receitas.reduce((a, b) => a + b, 0);
+    console.log("Total custo anual:   R$", totalCusto.toLocaleString("pt-BR"));
+    console.log(
+      "Total receita anual: R$",
+      totalReceita.toLocaleString("pt-BR"),
     );
   }, []);
 
@@ -113,11 +122,24 @@ function CMVChart() {
     labels: mockCmv.labels,
     datasets: [
       {
+        // Dataset 1: barras vermelhas representando o custo (CMV) para cada mês, utilizando os valores do array mockCmv.custos. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades. O order é definido como 2 para garantir que as barras de custo sejam renderizadas abaixo das barras de receita (que têm order 3) no gráfico.
         type: "bar",
         label: "Custo (CMV)",
         data: mockCmv.custos,
         backgroundColor: "rgba(239,68,68,0.75)",
         borderRadius: 4,
+        order: 2,
+      },
+      {
+        // Dataset 2: barras azuis representando a receita para cada mês, utilizando os valores do array mockCmv.receitas. O backgroundColor é definido como um azul semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades. O order é definido como 3 para garantir que as barras de receita sejam renderizadas acima das barras de custo (CMV) no gráfico.
+        type: "bar",
+        label: "Receita",
+        data: mockCmv.receitas,
+        backgroundColor: "rgba(0,245,196,0.15)",
+        borderColor: "rgba(0,245,196,0.5)",
+        borderWidth: 1,
+        borderRadius: 4,
+        order: 3,
       },
     ],
   };
@@ -149,7 +171,7 @@ function CMVChart() {
 
       <ChartWrap>
         {" "}
-        {/* Adicionando Dados ao Gráfico  apenas tabelas Vermelhas */}
+        {/* Adicionando Dados ao Gráfico barras vermelhas e azuis */}
         <Bar data={chartData} options={options} />
       </ChartWrap>
     </Card>

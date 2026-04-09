@@ -75,11 +75,11 @@ const Placeholder = styled.div`
 `;
 // MainLayout component: exibe o título da página e os placeholders para os gráficos, com console.table para mostrar o status de cada slot
 function MainLayout() {
-  console.table({
+  /**  console.table({
     "slot-1 (full)": "CMVChart — aguardando  ",
     "slot-2": "TopGroups — aguardando  ",
     "slot-3": "LeastSold — aguardando  ",
-  });
+  });*/
 
   return (
     <Wrapper>

@@ -7,7 +7,7 @@ import { Chart as ChartJS } from "chart.js";
 
 function App() {
   useEffect(() => {
-    console.log("chart.js versão:", ChartJS.version);
+    //console.log("chart.js versão:", ChartJS.version);
   }, []);
   return (
     <>

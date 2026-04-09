@@ -1,5 +1,32 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+// Registra todos os módulos necessários para Bar + Line no mesmo gráfico
+//Grafico  sendo testado no console.log para confirmar que o chart.js está funcionando e que o componente foi montado corretamente, com os módulos necessários registrados. O gráfico em si ainda não foi implementado, mas a estrutura base está pronta para receber os dados e opções de configuração posteriormente.
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+);
 
 // CMVChart — estrutura base: card com header e área do gráfico vazia
 const Card = styled.div`
@@ -43,22 +70,35 @@ const CardHeader = styled.div`
   }
 `;
 // Área do gráfico: placeholder estilizado, com borda pontilhada e texto indicando onde o gráfico será renderizado no futuro
-const ChartArea = styled.div`
+const ChartWrap = styled.div`
   height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  position: relative;
 `;
+
+// Dataset e labels vazios  - testando no console.log para confirmar que o chart.js está funcionando e que o componente foi montado corretamente, com os módulos necessários registrados. O gráfico em si ainda não foi implementado, mas a estrutura base está pronta para receber os dados e opções de configuração posteriormente.
+const emptyData = {
+  labels: [],
+  datasets: [],
+};
+// Opções básicas para o gráfico, com responsividade e manutenção da proporção, mas sem configurações específicas de eixos, legendas ou tooltips, já que o gráfico ainda não foi implementado.
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+};
 
 // CMVChart: componente funcional que representa o gráfico de Custo de Mercadoria Vendida, com estrutura base para ser preenchida posteriormente com a implementação do gráfico usando Chart.js ou outra biblioteca de gráficos. O useEffect é usado para confirmar que o componente foi montado corretamente, e a área do gráfico atualmente exibe um placeholder indicando onde o gráfico será renderizado no futuro.
 function CMVChart() {
   useEffect(() => {
-    console.log("CMVChart montado — estrutura base OK");
+    // console.log("CMVChart montado — estrutura base OK");
+    console.log("Módulos:", [
+      "CategoryScale",
+      "LinearScale",
+      "BarElement",
+      "LineElement",
+      "PointElement",
+      "Tooltip",
+      "Legend",
+    ]);
   }, []);
 
   return (
@@ -67,7 +107,11 @@ function CMVChart() {
         <div className="label">cmv chart</div>
       </CardHeader>
 
-      <ChartArea>gráfico será renderizado aqui</ChartArea>
+      <ChartWrap>
+        {" "}
+        {/* Canvas vazio — confirma que o chart.js está funcionando no console.log */}
+        <Bar data={emptyData} options={options} />
+      </ChartWrap>
     </Card>
   );
 }

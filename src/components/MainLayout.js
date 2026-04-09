@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CMVChart from "./CMVChart";
+import TopGroups from "./TopGroups";
 // MainLayout — grid com 3 slots: CMVChart, TopGroups, LeastSold
 const Wrapper = styled.main`
   max-width: 1400px;
@@ -99,8 +100,7 @@ function MainLayout() {
         </div>
 
         <Placeholder $h="280px">
-          <span className="slot-label">slot 2</span>
-          <span className="slot-name">TopGroups </span>
+          <TopGroups />
         </Placeholder>
 
         <Placeholder $h="280px">

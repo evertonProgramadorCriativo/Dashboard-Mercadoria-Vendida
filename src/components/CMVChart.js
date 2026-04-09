@@ -142,21 +142,21 @@ function CMVChart() {
       Math.max(...mockCmv.custos).toLocaleString("pt-BR"),
     );*/
     // totalCusto e totalReceita calculados a partir dos arrays de custos e receitas do mockCmv, utilizando o método reduce para somar os valores. Os resultados são formatados para exibição em reais (R$) com separadores de milhares, e exibidos no console para verificação.
-    const totalCusto = mockCmv.custos.reduce((a, b) => a + b, 0);
+    //const totalCusto = mockCmv.custos.reduce((a, b) => a + b, 0);
     // totalReceita é calculado somando todos os valores do array mockCmv.receitas usando o método reduce, que acumula a soma dos elementos do array. O resultado é formatado para exibição em reais (R$) com separadores de milhares usando toLocaleString('pt-BR'), e ambos os totais são exibidos no console para verificação.
-    const totalReceita = mockCmv.receitas.reduce((a, b) => a + b, 0);
-    console.log("Total custo anual:   R$", totalCusto.toLocaleString("pt-BR"));
-    console.log(
+    //const totalReceita = mockCmv.receitas.reduce((a, b) => a + b, 0);
+    //console.log("Total custo anual:   R$", totalCusto.toLocaleString("pt-BR"));
+    /*console.log(
       "Total receita anual: R$",
       totalReceita.toLocaleString("pt-BR"),
-    );
+    );*/
     // O cálculo da média percentual de CMV é feito somando todos os valores do array mockCmv.percentuais usando reduce, dividindo pelo número de elementos para obter a média, e formatando o resultado para exibição com uma casa decimal. A média anual de % CMV é exibida no console para verificação.
-    const mediaPct = (
+    /*const mediaPct = (
       mockCmv.percentuais.reduce((a, b) => a + b, 0) /
       mockCmv.percentuais.length
     ).toFixed(1);
     console.log("% CMV por mês:", mockCmv.percentuais);
-    console.log("Média % CMV anual:", mediaPct + "%");
+    console.log("Média % CMV anual:", mediaPct + "%");*/
   }, []);
 
   //  Dados do gráfico, utilizando os valores de labels e custos do mockCmv para criar um dataset do tipo "bar" com as barras vermelhas representando o custo (CMV) para cada mês. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades.

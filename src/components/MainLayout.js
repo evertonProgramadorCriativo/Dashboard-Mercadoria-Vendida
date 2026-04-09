@@ -37,6 +37,8 @@ const Grid = styled.div`
   gap: 1.5rem;
   grid-template-columns: 1fr;
 
+  /* Item .full - ocupa TODAS as 4 colunas */
+
   .full {
     grid-column: 1 / -1;
   }
@@ -92,9 +94,9 @@ function MainLayout() {
       </PageTitle>
       {/* Grid responsivo com 3 slots: o primeiro ocupa toda a largura, e os outros dois ficam lado a lado em telas maiores */}
       <Grid>
-        <Placeholder className="full" $h="340px">
+        <div className="full">
           <CMVChart />
-        </Placeholder>
+        </div>
 
         <Placeholder $h="280px">
           <span className="slot-label">slot 2</span>

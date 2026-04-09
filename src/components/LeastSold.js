@@ -70,6 +70,23 @@ const Table = styled.div`
     background: #dc2626;
   }
 `;
+
+const StockBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ $low }) =>
+    $low ? "rgba(249,115,22,0.12)" : "rgba(0,245,196,0.08)"};
+  border: 1px solid
+    ${({ $low }) => ($low ? "rgba(249,115,22,0.35)" : "rgba(0,245,196,0.25)")};
+  color: ${({ $low }) => ($low ? "#f97316" : "var(--accent-cyan)")};
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  margin-left: auto;
+`;
 // TableHead — cabeçalho da tabela, com estilo de grid para alinhar as colunas e fonte monoespaçada para facilitar a leitura dos dados
 const TableHead = styled.div`
   display: grid;
@@ -216,6 +233,11 @@ function LeastSold() {
             {/* badge vermelho — reforça que são poucas vendas */}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <QtyBadge>{p.quantidadeVendida}</QtyBadge>
+            </div>
+
+            {/* badge laranja se estoque ≤ 5, cyan se ok */}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <StockBadge $low={p.estoque <= 5}>{p.estoque}</StockBadge>
             </div>
           </TableRow>
         ))}

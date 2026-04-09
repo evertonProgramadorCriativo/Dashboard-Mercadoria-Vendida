@@ -231,12 +231,24 @@ function LeastSold() {
             <Cell>{formatCurrency(p.totalVendido)}</Cell>
 
             {/* badge vermelho — reforça que são poucas vendas */}
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
               <QtyBadge>{p.quantidadeVendida}</QtyBadge>
             </div>
 
             {/* badge laranja se estoque ≤ 5, cyan se ok */}
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
               <StockBadge $low={p.estoque <= 5}>{p.estoque}</StockBadge>
             </div>
           </TableRow>

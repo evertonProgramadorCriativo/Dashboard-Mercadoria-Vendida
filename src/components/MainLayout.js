@@ -52,31 +52,7 @@ const Grid = styled.div`
     grid-template-columns: 3fr 2fr;
   }
 `;
-// Placeholder estilizado para os slots, com título e descrição do conteúdo esperado
-const Placeholder = styled.div`
-  background: var(--bg-card);
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-  min-height: ${({ $h }) => $h || "200px"};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
 
-  .slot-label {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--accent-cyan);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .slot-name {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-  }
-`;
 // MainLayout component: exibe o título da página e os placeholders para os gráficos, com console.table para mostrar o status de cada slot
 function MainLayout() {
   /**  console.table({
@@ -102,9 +78,7 @@ function MainLayout() {
 
         <TopGroups />
 
-        <Placeholder>
-          <LeastSold />
-        </Placeholder>
+        <LeastSold />
       </Grid>
     </Wrapper>
   );

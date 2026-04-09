@@ -83,11 +83,12 @@ const StatsRow = styled.div`
   margin-bottom: 1.5rem;
 `;
 // Função de formatação para exibir os valores em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
-const fmt = (v) =>
+const formatCurrencyt = (v) =>
   // Formata o valor numérico v para exibição em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
     v,
   );
+
 //totalCusto, totalReceita e mediaPct são calculados a partir dos dados do mockCmv, utilizando o método reduce para somar os valores dos arrays de custos e receitas, e calcular a média dos percentuais. Os resultados são formatados para exibição em reais (R$) e porcentagem, respectivamente, e exibidos no console para verificação. Esses valores também são utilizados posteriormente para exibir as estatísticas no componente Stat.
 const totalCusto = mockCmv.custos.reduce((a, b) => a + b, 0);
 // totalReceita é calculado somando todos os valores do array mockCmv.receitas usando o método reduce, que acumula a soma dos elementos do array. O resultado é formatado para exibição em reais (R$) com separadores de milhares usando toLocaleString('pt-BR'), e ambos os totais são exibidos no console para verificação.
@@ -232,12 +233,12 @@ function CMVChart() {
       <StatsRow>
         {/* Stat para total anual de custos, com valor formatado em reais (R$) e cor vermelha para destacar a informação de custo. A chave "Total de Custos" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}
         <Stat $color="var(--accent-red)">
-          <div className="value">{fmt(totalCusto)}</div>
+          <div className="value">{formatCurrencyt(totalCusto)}</div>
           <div className="key">Total de Custos</div>
         </Stat>
         {/* Stat para total anual de receita, com valor formatado em reais (R$) e cor ciano para destacar a informação de receita. A chave "Total de Receita" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}
         <Stat $color="var(--accent-cyan)">
-          <div className="value">{fmt(totalReceita)}</div>
+          <div className="value">{formatCurrencyt(totalReceita)}</div>
           <div className="key">Total de Receita</div>
         </Stat>
         {/* Stat para média percentual de CMV, com valor formatado em porcentagem e cor laranja para destacar a informação de percentual. A chave "Média % CMV" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}

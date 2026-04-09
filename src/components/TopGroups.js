@@ -61,9 +61,9 @@ const List = styled.ul`
 `;
 // Item — cada item da lista representa um grupo mais vendido, exibindo o nome do grupo, o total vendido formatado como moeda, a quantidade vendida e o percentual do total de vendas. O estilo inclui uma borda inferior para separar visualmente os itens, e o último item não tem borda para evitar uma linha extra no final da lista.
 const Item = styled.li`
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--border);
 
@@ -71,6 +71,42 @@ const Item = styled.li`
     border-bottom: none;
   }
 `;
+
+const GroupName = styled.span`
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+`;
+
+const Meta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .value {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-cyan);
+  }
+
+  .qty {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    background: var(--bg-secondary, #0d1225);
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.45rem;
+    border-radius: 20px;
+  }
+`;
+
+// Utilitário de formatação
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+
 function TopGroups() {
   useEffect(() => {
     console.log("TopGroups — dados do mock carregados:");
@@ -101,7 +137,13 @@ function TopGroups() {
       {/* Lista de grupos mais vendidos, renderizada a partir dos dados do mockGroups. Cada item da lista exibe o nome do grupo, o total vendido formatado como moeda, a quantidade vendida e o percentual do total de vendas. O componente List é utilizado para organizar os itens em uma lista vertical, e o componente Item é utilizado para estilizar cada item da lista. */}
       <List>
         {mockGroups.map((g) => (
-          <Item key={g.grupo}>{g.grupo}</Item>
+          <Item key={g.grupo}>
+            <GroupName>{g.grupo}</GroupName>
+            <Meta>
+              <span className="qty">{g.quantidadeVendida} un.</span>
+              <span className="value">{formatCurrency(g.totalVendido)}</span>
+            </Meta>
+          </Item>
         ))}
       </List>
     </Card>

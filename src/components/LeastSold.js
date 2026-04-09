@@ -47,6 +47,28 @@ const Table = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  /* Scrollbar styling (opcional, mas fica mais bonito) */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ef4444;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #dc2626;
+  }
 `;
 // TableHead — cabeçalho da tabela, com estilo de grid para alinhar as colunas e fonte monoespaçada para facilitar a leitura dos dados
 const TableHead = styled.div`
@@ -116,7 +138,22 @@ const Cell = styled.div`
   color: var(--text-secondary, #8892a4);
   text-align: right;
 `;
-
+// QtyBadge — badge para destacar a quantidade vendida, com cor de alerta para chamar a atenção para os produtos menos vendidos
+const QtyBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  /* centraliza na célula */
+  margin-left: auto;
+`;
 // Utilitário de formatação
 const formatCurrency = (value) =>
   new Intl.NumberFormat("pt-BR", {
@@ -175,6 +212,11 @@ function LeastSold() {
               <div className="cat">{p.categoria}</div>
             </ProductName>
             <Cell>{formatCurrency(p.totalVendido)}</Cell>
+
+            {/* badge vermelho — reforça que são poucas vendas */}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <QtyBadge>{p.quantidadeVendida}</QtyBadge>
+            </div>
           </TableRow>
         ))}
       </Table>

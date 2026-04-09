@@ -55,9 +55,9 @@ const fadeUp = keyframes`
 // List e Item — estilos para a lista de grupos mais vendidos, com espaçamento entre os itens e borda inferior para separar visualmente cada grupo. O último item da lista não tem borda inferior para evitar uma linha extra no final da lista.
 const List = styled.ul`
   list-style: none;
+  gap: 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
 `;
 // BarTrack — barra de fundo para representar o total de vendas do grupo líder, servindo como referência para calcular a largura das barras de preenchimento (BarFill) dos outros grupos. A barra tem uma altura fixa, borda arredondada e cor de fundo definida pela variável --border, criando um contraste visual com as barras de preenchimento coloridas.
 const BarTrack = styled.div`

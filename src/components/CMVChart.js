@@ -75,7 +75,42 @@ const ChartWrap = styled.div`
   height: 300px;
   position: relative;
 `;
+// StatsRow e Stat: estrutura para exibir estatísticas adicionais relacionadas ao CMV, como total anual, média percentual, etc., estilizados para destacar os valores e as chaves de cada estatística. Atualmente não estão sendo utilizados, mas a estrutura está pronta para receber essas informações posteriormente.
+const StatsRow = styled.div`
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+`;
+// Função de formatação para exibir os valores em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
+const fmt = (v) =>
+  // Formata o valor numérico v para exibição em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
+  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
+    v,
+  );
+//totalCusto, totalReceita e mediaPct são calculados a partir dos dados do mockCmv, utilizando o método reduce para somar os valores dos arrays de custos e receitas, e calcular a média dos percentuais. Os resultados são formatados para exibição em reais (R$) e porcentagem, respectivamente, e exibidos no console para verificação. Esses valores também são utilizados posteriormente para exibir as estatísticas no componente Stat.
+const totalCusto = mockCmv.custos.reduce((a, b) => a + b, 0);
+// totalReceita é calculado somando todos os valores do array mockCmv.receitas usando o método reduce, que acumula a soma dos elementos do array. O resultado é formatado para exibição em reais (R$) com separadores de milhares usando toLocaleString('pt-BR'), e ambos os totais são exibidos no console para verificação.
+const totalReceita = mockCmv.receitas.reduce((a, b) => a + b, 0);
+// O cálculo da média percentual de CMV é feito somando todos os valores do array mockCmv.percentuais usando reduce, dividindo pelo número de elementos para obter a média, e formatando o resultado para exibição com uma casa decimal. A média anual de % CMV é exibida no console para verificação.
+const mediaPct = (
+  mockCmv.percentuais.reduce((a, b) => a + b, 0) / mockCmv.percentuais.length
+).toFixed(1);
 
+//Stat: componente para exibir uma estatística individual, com a chave (descrição) e o valor formatado, onde o valor pode ser colorido de acordo com um parâmetro opcional $color. A chave é exibida em uma fonte menor e cor mais suave, enquanto o valor é destacado com uma fonte monoespaçada e cor personalizada.
+const Stat = styled.div`
+  .value {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: ${({ $color }) => $color || "var(--text-primary)"};
+  }
+  .key {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+`;
 // Dataset e labels vazios  - testando no console.log para confirmar que o chart.js está funcionando e que o componente foi montado corretamente, com os módulos necessários registrados. O gráfico em si ainda não foi implementado, mas a estrutura base está pronta para receber os dados e opções de configuração posteriormente.
 const emptyData = {
   labels: [],
@@ -193,6 +228,25 @@ function CMVChart() {
   };
   return (
     <Card>
+      {/* StatsRow: exibe as estatísticas de total anual de custos, total anual de receita e média percentual de CMV, utilizando o componente Stat para formatar cada valor com a chave correspondente. As cores dos valores são personalizadas para destacar cada estatística, com vermelho para custos, ciano para receita e laranja para a média percentual. Atualmente, os valores são calculados a partir dos dados do mockCmv e formatados para exibição em reais (R$) e porcentagem, respectivamente. */}
+      <StatsRow>
+        {/* Stat para total anual de custos, com valor formatado em reais (R$) e cor vermelha para destacar a informação de custo. A chave "Total de Custos" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}
+        <Stat $color="var(--accent-red)">
+          <div className="value">{fmt(totalCusto)}</div>
+          <div className="key">Total de Custos</div>
+        </Stat>
+        {/* Stat para total anual de receita, com valor formatado em reais (R$) e cor ciano para destacar a informação de receita. A chave "Total de Receita" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}
+        <Stat $color="var(--accent-cyan)">
+          <div className="value">{fmt(totalReceita)}</div>
+          <div className="key">Total de Receita</div>
+        </Stat>
+        {/* Stat para média percentual de CMV, com valor formatado em porcentagem e cor laranja para destacar a informação de percentual. A chave "Média % CMV" é exibida abaixo do valor em uma fonte menor e cor mais suave. */}
+        <Stat $color="var(--accent-orange)">
+          <div className="value">{mediaPct}%</div>
+          <div className="key">Média % CMV</div>
+        </Stat>
+      </StatsRow>
+      {/* CardHeader: exibe o título do card com a label "cmv chart", estilizada para destacar a informação de que se trata do gráfico de CMV. O título é exibido em uma fonte menor e cor ciano, enquanto o título principal é exibido em uma fonte maior e cor primária, com espaçamento entre letras para melhorar a legibilidade. */}
       <CardHeader>
         <div className="label">cmv chart</div>
       </CardHeader>

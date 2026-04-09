@@ -13,6 +13,7 @@ import {
   Filler,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { mockCmv } from "../mocks/dashboardMocks";
 
 // Registra todos os módulos necessários para Bar + Line no mesmo gráfico
 //Grafico  sendo testado no console.log para confirmar que o chart.js está funcionando e que o componente foi montado corretamente, com os módulos necessários registrados. O gráfico em si ainda não foi implementado, mas a estrutura base está pronta para receber os dados e opções de configuração posteriormente.
@@ -90,7 +91,7 @@ const options = {
 function CMVChart() {
   useEffect(() => {
     // console.log("CMVChart montado — estrutura base OK");
-    console.log("Módulos:", [
+    /**  console.log("Módulos:", [
       "CategoryScale",
       "LinearScale",
       "BarElement",
@@ -98,9 +99,48 @@ function CMVChart() {
       "PointElement",
       "Tooltip",
       "Legend",
-    ]);
+    ]);*/
+    console.log("CMVChart — labels carregados do mock:", mockCmv.labels);
+    console.log("Custos (12 meses):", mockCmv.custos);
+    console.log(
+      "Maior custo: R$",
+      Math.max(...mockCmv.custos).toLocaleString("pt-BR"),
+    );
   }, []);
 
+  //  Dados do gráfico, utilizando os valores de labels e custos do mockCmv para criar um dataset do tipo "bar" com as barras vermelhas representando o custo (CMV) para cada mês. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades.
+  const chartData = {
+    labels: mockCmv.labels,
+    datasets: [
+      {
+        type: "bar",
+        label: "Custo (CMV)",
+        data: mockCmv.custos,
+        backgroundColor: "rgba(239,68,68,0.75)",
+        borderRadius: 4,
+      },
+    ],
+  };
+  // Opções do gráfico, com customização de cores, fontes e formatação dos ticks para exibir os valores em milhares de reais (R$), além de manter a responsividade e a proporção do gráfico.
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: { color: "#8892a4", font: { family: "Space Mono", size: 11 } },
+      },
+    },
+    scales: {
+      x: { ticks: { color: "#8892a4" }, grid: { color: "#1e2d4a" } },
+      y: {
+        ticks: {
+          color: "#8892a4",
+          callback: (v) => `R$${(v / 1000).toFixed(0)}k`,
+        },
+        grid: { color: "#1e2d4a" },
+      },
+    },
+  };
   return (
     <Card>
       <CardHeader>
@@ -109,8 +149,8 @@ function CMVChart() {
 
       <ChartWrap>
         {" "}
-        {/* Canvas vazio — confirma que o chart.js está funcionando no console.log */}
-        <Bar data={emptyData} options={options} />
+        {/* Adicionando Dados ao Gráfico  apenas tabelas Vermelhas */}
+        <Bar data={chartData} options={options} />
       </ChartWrap>
     </Card>
   );

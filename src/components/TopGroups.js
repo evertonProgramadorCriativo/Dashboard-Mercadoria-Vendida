@@ -52,6 +52,25 @@ const Area = styled.div`
   font-size: 0.75rem;
 `;
 
+// List e Item — estilos para a lista de grupos mais vendidos, com espaçamento entre os itens e borda inferior para separar visualmente cada grupo. O último item da lista não tem borda inferior para evitar uma linha extra no final da lista.
+const List = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
+// Item — cada item da lista representa um grupo mais vendido, exibindo o nome do grupo, o total vendido formatado como moeda, a quantidade vendida e o percentual do total de vendas. O estilo inclui uma borda inferior para separar visualmente os itens, e o último item não tem borda para evitar uma linha extra no final da lista.
+const Item = styled.li`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
 function TopGroups() {
   useEffect(() => {
     console.log("TopGroups — dados do mock carregados:");
@@ -79,7 +98,12 @@ function TopGroups() {
     <Card>
       <CardLabel>top groups </CardLabel>
       <CardTitle>Grupos Mais Vendidos</CardTitle>
-      <Area>{mockGroups.length} grupos carregados</Area>
+      {/* Lista de grupos mais vendidos, renderizada a partir dos dados do mockGroups. Cada item da lista exibe o nome do grupo, o total vendido formatado como moeda, a quantidade vendida e o percentual do total de vendas. O componente List é utilizado para organizar os itens em uma lista vertical, e o componente Item é utilizado para estilizar cada item da lista. */}
+      <List>
+        {mockGroups.map((g) => (
+          <Item key={g.grupo}>{g.grupo}</Item>
+        ))}
+      </List>
     </Card>
   );
 }

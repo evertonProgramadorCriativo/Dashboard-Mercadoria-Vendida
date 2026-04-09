@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mockProducts } from "../mocks/dashboardMocks";
 
 // LeastSold — estrutura base: card com header e área vazia
@@ -68,7 +68,47 @@ const TableHead = styled.div`
     }
   }
 `;
+// fadeUp — animação para as linhas da tabela
+const fadeUp = keyframes`
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
+
 // TableRow — linha de dados da tabela, com estilo de grid para alinhar as colunas e padding para separar visualmente os dados
+
+const TableRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 90px 55px 60px;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+
+  /* linha entra com delay escalonado */
+  animation: ${fadeUp} 0.3s ease both;
+  animation-delay: ${({ $idx }) => $idx * 0.05}s;
+
+  &:hover {
+    background: #161f35;
+  }
+`;
+
+const ProductName = styled.div`
+  .name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cat {
+    font-size: 0.67rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+  }
+`;
 function LeastSold() {
   useEffect(() => {
     console.log("Total de produtos:", mockProducts.length);
@@ -112,6 +152,15 @@ function LeastSold() {
           <span>Vendas</span>
           <span>Estoque</span>
         </TableHead>
+        {/* Mapeia os produtos do mockProducts para criar as linhas da tabela, utilizando o componente TableRow para exibir o nome do produto, categoria, quantidade vendida e estoque. O índice do produto é passado como prop para controlar o delay da animação de entrada das linhas, criando um efeito visual mais dinâmico e fluido. O nome do produto é exibido com um estilo que permite truncar o texto caso seja muito longo, garantindo que a tabela mantenha uma aparência organizada mesmo com nomes de produtos extensos.*/}
+        {mockProducts.map((p, i) => (
+          <TableRow key={p.produto} $idx={i}>
+            <ProductName>
+              <div className="name">{p.produto}</div>
+              <div className="cat">{p.categoria}</div>
+            </ProductName>
+          </TableRow>
+        ))}
       </Table>
     </Card>
   );

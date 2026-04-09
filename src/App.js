@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import GlobalStyle from "./styles/GlobalStyle";
-
+import Header from "./components/Header";
 function App() {
   useEffect(() => {
     // Teste para verificar se as CSS vars estão acessíveis
@@ -13,23 +13,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <p
-          style={{
-            color: "var(--accent-cyan)",
-            fontFamily: "var(--font-mono)",
-          }}
-        >
-          Dashboard CMV
-        </p>
-      </div>
+      <Header />
     </>
   );
 }

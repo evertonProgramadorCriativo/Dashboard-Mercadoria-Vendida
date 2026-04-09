@@ -1,23 +1,36 @@
 import React, { useEffect } from "react";
-
-import "./App.css";
+import GlobalStyle from "./styles/GlobalStyle";
 
 function App() {
   useEffect(() => {
-    console.log("testando configurações iniciais front end");
+    // Teste para verificar se as CSS vars estão acessíveis
+    //getPropertyValue('--accent-cyan').trim() para remover espaços extras
+    const cyan = getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent-cyan")
+      .trim();
+    console.log("--accent-cyan:", cyan);
   }, []);
   return (
-    <div
-      style={{
-        background: "#080c18",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <p style={{ color: "#00f5c4", fontFamily: "monospace" }}>Dashboard CMV</p>
-    </div>
+    <>
+      <GlobalStyle />
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p
+          style={{
+            color: "var(--accent-cyan)",
+            fontFamily: "var(--font-mono)",
+          }}
+        >
+          Dashboard CMV
+        </p>
+      </div>
+    </>
   );
 }
 

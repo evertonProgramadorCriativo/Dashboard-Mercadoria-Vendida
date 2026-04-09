@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { mockGroups } from "../mocks/dashboardMocks";
 // TopGroups — card estilizado para exibir os grupos mais vendidos, com título, rótulo e área de conteúdo
 const Card = styled.div`
@@ -39,17 +39,17 @@ const CardTitle = styled.h2`
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
 `;
-// Area — placeholder estilizado para a lista de grupos mais vendidos, com borda tracejada e texto centralizado indicando que a lista será renderizada ali
-const Area = styled.div`
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+
+// Animação: barra cresce da esquerda para direita
+const fillBar = keyframes`
+  from { width: 0; }
+  to   { width: ${({ $pct }) => $pct}%; }
+`;
+
+// Animação: item sobe suavemente
+const fadeUp = keyframes`
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 `;
 
 // List e Item — estilos para a lista de grupos mais vendidos, com espaçamento entre os itens e borda inferior para separar visualmente cada grupo. O último item da lista não tem borda inferior para evitar uma linha extra no final da lista.
@@ -84,6 +84,10 @@ const BarFill = styled.div`
     ];
     return gradients[$idx % gradients.length];
   }};
+
+  /* barra anima na entrada */
+  animation: ${fillBar} 0.8s ease both;
+  animation-delay: ${({ $idx }) => 0.2 + $idx * 0.08}s;
 `;
 
 // Item — cada item da lista representa um grupo mais vendido, exibindo o nome do grupo, o total vendido formatado como moeda, a quantidade vendida e o percentual do total de vendas. O estilo inclui uma borda inferior para separar visualmente os itens, e o último item não tem borda para evitar uma linha extra no final da lista.
@@ -91,13 +95,15 @@ const BarFill = styled.div`
 const Item = styled.li`
   display: flex;
   flex-direction: column;
-
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--border);
 
   &:last-child {
     border-bottom: none;
   }
+  /* cada item entra com delay escalonado */
+  animation: ${fadeUp} 0.4s ease both;
+  animation-delay: ${({ $idx }) => $idx * 0.08}s;
 `;
 // ItemTop — parte superior de cada item da lista, onde o nome do grupo é exibido à esquerda e as informações de quantidade e total vendido são exibidas à direita. O layout utiliza flexbox para alinhar os elementos e criar um espaçamento entre eles, garantindo que o nome do grupo e as informações de vendas sejam claramente separados e fáceis de ler.
 const ItemTop = styled.div`
@@ -133,6 +139,13 @@ const Meta = styled.div`
     border-radius: 20px;
   }
 `;
+// PctBadge — badge para exibir o percentual do total de vendas que cada grupo
+const PctBadge = styled.span`
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+`;
+
 // Calcula o maior valor para proporção
 const maxVal = Math.max(...mockGroups.map((g) => g.totalVendido));
 
@@ -192,6 +205,8 @@ function TopGroups() {
                 {/* Meta exibe a quantidade vendida e o total vendido formatado como moeda, utilizando a função formatCurrency para garantir a formatação correta. A quantidade vendida é exibida com um estilo de badge para destacar visualmente, enquanto o total vendido é exibido com uma fonte monoespaçada e cor de destaque para facilitar a leitura. */}
                 <Meta>
                   <span className="qty">{g.quantidadeVendida} un.</span>
+                  {/* Badge exibe o percentual do total de vendas, utilizando a cor de destaque para destacar visualmente */}
+                  <PctBadge>{g.percentualTotal}%</PctBadge>{" "}
                   <span className="value">
                     {formatCurrency(g.totalVendido)}
                   </span>

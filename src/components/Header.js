@@ -25,10 +25,11 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
+  width: 100%;
 
   @media (max-width: 780px) {
     padding: 1.5rem 0.5rem;
-    width: 100%;
+    border-bottom: none;);
   }
 `;
 

@@ -28,7 +28,7 @@ export const mockCmv = {
     136000, 155000, 165000,
   ],
   percentuais: [
-    42.9, 42.3, 43.0, 43.2, 43.5, 43.1, 43.3, 43.1, 43.4, 43.3, 43.4, 43.7,
+    12.9, 16.3, 23.0, 43.2, 33.5, 23.1, 13.3, 33.1, 37.4, 43.3, 40.4, 38.7,
   ],
 };
 //MoockGroups: dados falsos para o gráfico de grupos de produtos mais vendidos, com informações sobre o total vendido, quantidade vendida e percentual do total para cada grupo

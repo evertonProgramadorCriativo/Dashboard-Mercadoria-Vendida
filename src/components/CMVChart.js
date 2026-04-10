@@ -14,7 +14,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 import { mockCmv } from "../mocks/dashboardMocks";
 
 // Registra todos os módulos necessários para Bar + Line no mesmo gráfico
@@ -226,7 +226,7 @@ function CMVChart() {
       {
         // Dataset 3: linha laranja de % CMV no eixo Y direito
         type: "line",
-        label: "% CMV",
+        label: "%CMV",
         data: mockCmv.percentuais,
         borderColor: "#f97316",
         backgroundColor: "rgba(249,115,22,0.08)",
@@ -330,7 +330,7 @@ function CMVChart() {
       <ChartWrap>
         {" "}
         {/* Barras vermelhas + barras cyan + linha laranja com pontos mostrando % no eixo direito */}
-        <Bar data={chartData} options={options} />
+        <Chart type="bar" data={chartData} options={options} />
       </ChartWrap>
     </Card>
   );

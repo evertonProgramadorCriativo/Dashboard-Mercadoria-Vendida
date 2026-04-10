@@ -8,6 +8,11 @@ const Wrapper = styled.main`
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 2.5rem;
+
+  /* mobile: menos padding lateral */
+  @media (max-width: 780px) {
+    padding: 0;
+  }
 `;
 
 const PageTitle = styled.div`
@@ -31,6 +36,12 @@ const PageTitle = styled.div`
       font-style: normal;
       color: var(--accent-cyan);
     }
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 1.5rem 0.3rem;
   }
 `;
 // Grid responsivo: 1 coluna em telas pequenas, 2 colunas em telas médias, e 2 colunas com proporção 3:2 em telas grandes

@@ -49,6 +49,16 @@ const Card = styled.div`
     border-radius: var(--radius) var(--radius) 0 0;
     background: var(--accent-cyan);
   }
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+    font-size: 0.75rem;
+    w
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 // CardHeader: título do card com label e título principal, estilizados para destacar a informação de que se trata do gráfico de CMV
 const CardHeader = styled.div`
@@ -69,11 +79,24 @@ const CardHeader = styled.div`
     color: var(--text-primary);
     letter-spacing: -0.02em;
   }
+
+    @media (max-width: 480px) {
+    h2 {
+      font-size: 1rem;
+    }
 `;
 // Área do gráfico: placeholder estilizado, com borda pontilhada e texto indicando onde o gráfico será renderizado no futuro
 const ChartWrap = styled.div`
   height: 300px;
   position: relative;
+
+  @media (max-width: 768px) {
+    height: 260px;
+  }
+
+  @media (max-width: 480px) {
+    height: 220px;
+  }
 `;
 // StatsRow e Stat: estrutura para exibir estatísticas adicionais relacionadas ao CMV, como total anual, média percentual, etc., estilizados para destacar os valores e as chaves de cada estatística. Atualmente não estão sendo utilizados, mas a estrutura está pronta para receber essas informações posteriormente.
 const StatsRow = styled.div`
@@ -81,6 +104,18 @@ const StatsRow = styled.div`
   gap: 2rem;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
 `;
 // Função de formatação para exibir os valores em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
 const formatCurrencyt = (v) =>
@@ -102,25 +137,30 @@ const mediaPct = (
 const Stat = styled.div`
   .value {
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: ${({ $color }) => $color || "var(--text-primary)"};
   }
   .key {
-    font-size: 0.7rem;
+    font-size: 1.7rem;
     color: var(--text-muted);
     margin-top: 0.15rem;
+  }
+
+  @media (max-width: 480px) {
+    .value {
+      font-size: 2.6rem;
+    }
+
+    .key {
+      font-size: 2.3rem;
+    }
   }
 `;
 // Dataset e labels vazios  - testando no console.log para confirmar que o chart.js está funcionando e que o componente foi montado corretamente, com os módulos necessários registrados. O gráfico em si ainda não foi implementado, mas a estrutura base está pronta para receber os dados e opções de configuração posteriormente.
 const emptyData = {
   labels: [],
   datasets: [],
-};
-// Opções básicas para o gráfico, com responsividade e manutenção da proporção, mas sem configurações específicas de eixos, legendas ou tooltips, já que o gráfico ainda não foi implementado.
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
 };
 
 // CMVChart: componente funcional que representa o gráfico de Custo de Mercadoria Vendida, com estrutura base para ser preenchida posteriormente com a implementação do gráfico usando Chart.js ou outra biblioteca de gráficos. O useEffect é usado para confirmar que o componente foi montado corretamente, e a área do gráfico atualmente exibe um placeholder indicando onde o gráfico será renderizado no futuro.
@@ -201,30 +241,66 @@ function CMVChart() {
     ],
   };
   // Opções do gráfico, com customização de cores, fontes e formatação dos ticks para exibir os valores em milhares de reais (R$), além de manter a responsividade e a proporção do gráfico.
+  // Opções de configuração do gráfico Chart.js
   const options = {
+    // responsive: true - Faz o gráfico redimensionar automaticamente quando o container pai muda de tamanho
     responsive: true,
+
+    // maintainAspectRatio: false - Permite que o gráfico ocupe toda a altura do container, sem manter a proporção original (largura/altura)
     maintainAspectRatio: false,
-    interaction: { mode: "index", intersect: false },
+
+    // interaction: Configura como o gráfico responde aos eventos do mouse (hover, clique)
+    interaction: {
+      mode: "index", // Exibe dados de todas as séries no mesmo índice (ex: todos valores de Janeiro)
+      intersect: false, // Mostra tooltip mesmo se o mouse não estiver exatamente sobre um ponto (mais fácil de interagir)
+    },
+
+    // plugins: Configurações dos recursos adicionais do Chart.js
     plugins: {
+      // legend: Configura a caixa de legenda (nomes das linhas do gráfico)
       legend: {
-        labels: { color: "#8892a4", font: { family: "Space Mono", size: 11 } },
+        position: "top", // Coloca a legenda no topo do gráfico (opções: top, bottom, left, right)
+        labels: {
+          // Configura a aparência do texto da legenda
+          color: "#8892a4", // Cor cinza para o texto (suave e discreto)
+          font: {
+            family: "Space Mono", // Fonte monoespaçada para manter consistência com o design
+            size: window.innerWidth < 480 ? 8 : 11, // Tamanho responsivo: 8px em celulares, 11px em telas maiores
+          },
+        },
       },
     },
+
+    // scales: Configura os eixos do gráfico
     scales: {
-      x: { ticks: { color: "#8892a4" }, grid: { color: "#1e2d4a" } },
+      // x: Configuração do eixo horizontal (categorias/valores)
+      x: {
+        ticks: {
+          color: "#8892a4", // Cor cinza para os rótulos do eixo X
+          maxRotation: 0, // Impede rotação dos textos (mantém horizontal)
+          minRotation: 0, // Mantém textos sempre na horizontal (mais legível)
+        },
+        grid: { color: "#1e2d4a" }, // Cor das linhas de grade do eixo X (azul escuro suave)
+      },
+
+      // y: Configuração do eixo vertical esquerdo (valores monetários)
       y: {
         ticks: {
-          color: "#8892a4",
-          callback: (v) => `R$${(v / 1000).toFixed(0)}k`,
+          color: "#8892a4", // Cor cinza para os números do eixo Y
+          callback: (v) => `R$${(v / 1000).toFixed(0)}k`, // Formata valores: divide por 1000 e adiciona 'k' (ex: 50000 → R$50k)
         },
-        grid: { color: "#1e2d4a" },
+        grid: { color: "#1e2d4a" }, // Cor das linhas de grade do eixo Y esquerdo
       },
-    },
-    // Eixo direito exclusivo para a linha de percentual
-    y2: {
-      position: "right",
-      ticks: { color: "#f97316", callback: (v) => `${v}%` },
-      grid: { display: false },
+
+      // y2: Configuração do eixo vertical direito (segundo eixo, para percentuais)
+      y2: {
+        position: "right", // Posiciona este eixo no lado direito do gráfico
+        ticks: {
+          color: "#f97316", // Cor laranja para destacar que é um segundo eixo (geralmente percentuais)
+          callback: (v) => `${v}%`, // Formata os valores adicionando símbolo de porcentagem (ex: 25.5 → 25.5%)
+        },
+        grid: { display: false }, // Esconde as linhas de grade para não poluir o gráfico (usar apenas linhas do eixo Y esquerdo)
+      },
     },
   };
   return (

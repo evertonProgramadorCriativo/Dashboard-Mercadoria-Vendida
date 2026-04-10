@@ -25,11 +25,6 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
-
-  @media (max-width: 780px) {
-    padding: 1.5rem 0.5rem;
-    width: 100%;
-  }
 `;
 
 const Logo = styled.div`
@@ -90,13 +85,12 @@ const Right = styled.div`
   @media (max-width: 768px) {
     position: absolute;
     top: 80px;
-    right: 0px;
-    width: 100%;
+    right: 20px;
     flex-direction: column;
     align-items: flex-start;
     background: rgba(8, 12, 24, 0.95);
     padding: 1.5rem;
-    border-radius: 0px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
@@ -129,10 +123,6 @@ const LoginButton = styled(PulsingButton)`
     background: rgba(0, 212, 255, 0.1);
     box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
   }
-  @media (max-width: 768px) {
-    width: 100%;
-    border-radius: 0px;
-  }
 `;
 
 const CadastroButton = styled(PulsingButton)`
@@ -143,10 +133,6 @@ const CadastroButton = styled(PulsingButton)`
   &:hover {
     background: linear-gradient(135deg, var(--text-muted), var(--accent-cyan));
     box-shadow: 0 0 16px rgba(10, 131, 92, 0.4);
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-    border-radius: 0px;
   }
 `;
 
@@ -162,10 +148,6 @@ const AdminButton = styled(PulsingButton)`
     color: #ff8a8a;
     box-shadow: 0 0 12px rgba(255, 59, 48, 0.3);
   }
-  @media (max-width: 768px) {
-    width: 100%;
-    border-radius: 0px;
-  }
 `;
 
 const Badge = styled.div`
@@ -176,14 +158,6 @@ const Badge = styled.div`
   border: 1px solid rgba(0, 245, 196, 0.2);
   padding: 0.3rem 0.75rem;
   border-radius: 20px;
-  @media (max-width: 768px) {
-    width: 100%;
-    border-radius: 0px;
-    align-items: center;
-
-    display: flex;
-    justify-content: center;
-  }
 `;
 
 function Header() {

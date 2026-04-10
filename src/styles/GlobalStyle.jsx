@@ -22,12 +22,25 @@ const GlobalStyle = createGlobalStyle`
     --font-display: 'Syne', sans-serif;
     --radius:       12px;
   }
+      html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 // Estilos globais para body e outros elementos
   body {
     background: var(--bg-primary);
     color: var(--text-primary);
     font-family: var(--font-display);
     min-height: 100vh;
+
+      /* scrollbar customizada */
+  ::-webkit-scrollbar       { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+    &:hover { background: var(--accent-cyan); }
+  }
   }
 `;
 

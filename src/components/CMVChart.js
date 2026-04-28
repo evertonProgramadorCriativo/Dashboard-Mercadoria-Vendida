@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Chart as ChartJS,
@@ -57,7 +57,7 @@ const Card = styled.div`
   @media (max-width: 768px) {
     padding: 1.25rem;
     font-size: 0.75rem;
-    width: 100vw;
+    width: 106vw;
   }
 
   @media (max-width: 480px) {
@@ -171,6 +171,7 @@ const Stat = styled.div`
 
 // CMVChart: componente funcional que representa o gráfico de Custo de Mercadoria Vendida, com estrutura base para ser preenchida posteriormente com a implementação do gráfico usando Chart.js ou outra biblioteca de gráficos. O useEffect é usado para confirmar que o componente foi montado corretamente, e a área do gráfico atualmente exibe um placeholder indicando onde o gráfico será renderizado no futuro.
 function CMVChart() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   useEffect(() => {
     // console.log("CMVChart montado — estrutura base OK");
     /**  console.log("Módulos:", [
@@ -204,17 +205,28 @@ function CMVChart() {
     ).toFixed(1);
     console.log("% CMV por mês:", mockCmv.percentuais);
     console.log("Média % CMV anual:", mediaPct + "%");*/
+    const handleResize = () => setIsMobile(window.innerWidth <= 600);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   //  Dados do gráfico, utilizando os valores de labels e custos do mockCmv para criar um dataset do tipo "bar" com as barras vermelhas representando o custo (CMV) para cada mês. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades.
+  const visibleLabels = isMobile ? mockCmv.labels.slice(0, 3) : mockCmv.labels;
+  const visibleCustos = isMobile ? mockCmv.custos.slice(0, 3) : mockCmv.custos;
+  const visibleReceitas = isMobile
+    ? mockCmv.receitas.slice(0, 3)
+    : mockCmv.receitas;
+  const visiblePercentuais = isMobile
+    ? mockCmv.percentuais.slice(0, 3)
+    : mockCmv.percentuais;
   const chartData = {
-    labels: mockCmv.labels,
+    labels: visibleLabels,
     datasets: [
       {
         // Dataset 1: barras vermelhas representando o custo (CMV) para cada mês, utilizando os valores do array mockCmv.custos. O backgroundColor é definido como um vermelho semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades. O order é definido como 2 para garantir que as barras de custo sejam renderizadas abaixo das barras de receita (que têm order 3) no gráfico.
         type: "bar",
         label: "Custo (CMV)",
-        data: mockCmv.custos,
+        data: visibleCustos,
         backgroundColor: "rgba(239,68,68,0.75)",
         borderRadius: 4,
         order: 2,
@@ -223,7 +235,7 @@ function CMVChart() {
         // Dataset 2: barras azuis representando a receita para cada mês, utilizando os valores do array mockCmv.receitas. O backgroundColor é definido como um azul semi-transparente, e as bordas das barras têm um raio de 4 para suavizar as extremidades. O order é definido como 3 para garantir que as barras de receita sejam renderizadas acima das barras de custo (CMV) no gráfico.
         type: "bar",
         label: "Receita",
-        data: mockCmv.receitas,
+        data: visibleReceitas,
         backgroundColor: "rgba(0,245,196,0.15)",
         borderColor: "rgba(0,245,196,0.5)",
         borderWidth: 1,
@@ -234,7 +246,7 @@ function CMVChart() {
         // Dataset 3: linha laranja de % CMV no eixo Y direito
         type: "line",
         label: "%CMV",
-        data: mockCmv.percentuais,
+        data: visiblePercentuais,
         borderColor: "#f97316",
         backgroundColor: "rgba(249,115,22,0.08)",
         pointBackgroundColor: "#f97316",

@@ -21,6 +21,9 @@ const Card = styled.div`
     border-radius: var(--radius) var(--radius) 0 0;
     background: var(--accent-blue);
   }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 // CardLabel — rótulo pequeno no topo do card, estilizado para indicar o tipo de informação (top groups) e criar hierarquia visual com o título principal do card (Grupos Mais Vendidos)
 const CardLabel = styled.div`

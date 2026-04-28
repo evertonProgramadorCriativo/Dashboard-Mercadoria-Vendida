@@ -23,6 +23,9 @@ const Card = styled.div`
     border-radius: var(--radius) var(--radius) 0 0;
     background: #ef4444;
   }
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 // CardLabel — rótulo pequeno no topo do card, com fonte monoespaçada e cor de destaque
 const CardLabel = styled.div`

@@ -57,7 +57,7 @@ const Card = styled.div`
   @media (max-width: 768px) {
     padding: 1.25rem;
     font-size: 0.75rem;
-    w
+    width: 107vw;
   }
 
   @media (max-width: 480px) {
@@ -93,32 +93,31 @@ const CardHeader = styled.div`
 const ChartWrap = styled.div`
   height: 300px;
   position: relative;
-
+  width: 100%;
   @media (max-width: 768px) {
     height: 260px;
   }
 
   @media (max-width: 480px) {
     height: 220px;
+    width: 100vw;
   }
 `;
 // StatsRow e Stat: estrutura para exibir estatísticas adicionais relacionadas ao CMV, como total anual, média percentual, etc., estilizados para destacar os valores e as chaves de cada estatística. Atualmente não estão sendo utilizados, mas a estrutura está pronta para receber essas informações posteriormente.
 const StatsRow = styled.div`
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
   margin-bottom: 1.5rem;
 
   @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    width: 100%;
-    justify-content: space-between;
   }
 
   @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
 `;
 // Função de formatação para exibir os valores em reais (R$) com separadores de milhares, utilizando a API Intl.NumberFormat para formatação de moeda em português do Brasil. A função recebe um valor numérico e retorna uma string formatada como moeda, facilitando a exibição dos totais de custos e receitas no formato adequado.
@@ -141,23 +140,31 @@ const mediaPct = (
 const Stat = styled.div`
   .value {
     font-family: var(--font-mono);
-    font-size: 2.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: ${({ $color }) => $color || "var(--text-primary)"};
   }
   .key {
-    font-size: 1.7rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     margin-top: 0.15rem;
   }
 
+  @media (max-width: 768px) {
+    .value {
+      font-size: 1.1rem;
+    }
+    .key {
+      font-size: 0.65rem;
+    }
+  }
+
   @media (max-width: 480px) {
     .value {
-      font-size: 2.6rem;
+      font-size: 1rem;
     }
-
     .key {
-      font-size: 2.3rem;
+      font-size: 0.6rem;
     }
   }
 `;

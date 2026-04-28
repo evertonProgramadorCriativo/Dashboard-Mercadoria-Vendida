@@ -83,7 +83,7 @@ function MainLayout() {
       </PageTitle>
       {/* Grid responsivo com 3 slots: o primeiro ocupa toda a largura, e os outros dois ficam lado a lado em telas maiores */}
       <Grid>
-        <div className="full">
+        <div>
           <CMVChart />
         </div>
 

@@ -109,6 +109,11 @@ const TableHead = styled.div`
       text-align: right;
     }
   }
+
+  @media (max-width: 1200px) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 // fadeUp — animação para as linhas da tabela
 const fadeUp = keyframes`
@@ -134,6 +139,10 @@ const TableRow = styled.div`
   &:hover {
     background: #161f35;
   }
+  @media (max-width: 1200px) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 const ProductName = styled.div`
@@ -149,6 +158,9 @@ const ProductName = styled.div`
     font-size: 0.67rem;
     color: var(--text-muted);
     margin-top: 0.1rem;
+  }
+  @media (max-width: 1200px) {
+    font-size: 0.6rem;
   }
 `;
 // Cell — célula para exibir os dados de valor, vendas e estoque, com fonte monoespaçada e alinhamento à direita para facilitar a leitura dos números

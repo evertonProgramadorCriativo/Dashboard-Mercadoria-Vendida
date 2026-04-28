@@ -109,10 +109,12 @@ const TableHead = styled.div`
       text-align: right;
     }
   }
-
-  @media (max-width: 1200px) {
-    display: flex;
-    justify-content: space-between;
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr 72px 46px 50px;
+    gap: 0.3rem;
+    span {
+      font-size: 0.55rem;
+    }
   }
 `;
 // fadeUp — animação para as linhas da tabela
@@ -139,15 +141,16 @@ const TableRow = styled.div`
   &:hover {
     background: #161f35;
   }
-  @media (max-width: 1200px) {
-    display: flex;
-    justify-content: space-between;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr 72px 46px 50px;
+    gap: 0.3rem;
   }
 `;
 
 const ProductName = styled.div`
   .name {
-    font-size: 0.82rem;
+    font-size: 0.62rem;
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
